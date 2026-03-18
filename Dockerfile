@@ -22,8 +22,8 @@ COPY vendor ./vendor
 COPY src ./src
 COPY skills ./skills
 
-# 构建 release 版本
-RUN cargo build --release --all-features
+# 构建 release 版本（不包含所有特性，先验证基础功能）
+RUN cargo build --release -v
 
 # 第二阶段：运行环境
 FROM alpine:latest
