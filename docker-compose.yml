@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  nanobot:
+    image: ${DOCKER_IMAGE:-kobex95/nanobot-now}:${DOCKER_TAG:-latest}
+    container_name: nanobot
+    restart: unless-stopped
+    ports:
+      - "18890:18890"  # WebUI 端口
+    volumes:
+      # 持久化配置和数据
+      - ./config:/home/nanobot/.nanobot:rw
+      - ./data:/data:rw
+    environment:
+      # 可选：设置时区
+      - TZ=Asia/Shanghai
+      # 可以通过环境变量覆盖配置（优先级：环境变量 > 配置文件）
+      # - NANOBOT_PROVIDERS_OPENAI_API_KEY=sk-xxx
+      # - NANOBOT_AGENTS_DEFAULTS_MODEL=gpt-4o-mini
+    # 如果需要从外部文件加载配置（推荐方式：挂载 config 目录）
+    # command: ["gateway"]
+    healthcheck:
+      test: ["CMD", "nanobot", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

@@ -1,0 +1,21 @@
+# 忽略构建文件和依赖
+target/
+.cargo/
+.vendor/
+bridge/node_modules/
+bridge/dist/
+
+# 忽略版本控制
+.git/
+.gitignore
+
+# 忽略临时文件
+*.log
+*.tmp
+.DS_Store
+
+# 忽略配置文件（敏感信息，应在运行时挂载）
+.github/
+!.github/workflows/
+!.dockerignore
+!Dockerfile

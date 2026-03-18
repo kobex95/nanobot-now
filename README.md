@@ -50,13 +50,44 @@ English: [README.en.md](README.en.md)
     - 中英双语（按浏览器语言自动切换）
     - 一屏布局（桌面端页面不滚动，面板内滚动）
 
-## 📦 环境要求
+## 🛳️ Docker 部署（推荐）
 
-- Rust stable（建议 1.85+）
-- 可选：
-  - Node.js 18+（WhatsApp bridge 登录）
-  - Brave Search API Key（`web_search`，可选；未配置时自动降级到 DuckDuckGo 无 key 搜索）
-  - Groq API Key（语音转写）
+### 快速启动（Docker Compose）
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/kobex95/nanobot-now.git
+cd nanobot-now
+
+# 2. 复制示例配置
+mkdir -p config data
+cp config/config.example.json config/config.json
+vi config/config.json  # 编辑填入 API Keys
+
+# 3. 启动服务
+docker-compose up -d
+
+# 4. 访问 WebUI
+浏览器打开：http://localhost:18890
+
+# 5. 查看日志
+docker-compose logs -f nanobot
+```
+
+详细部署文档见：[DOCKER_DEPLOY.md](DOCKER_DEPLOY.md)
+
+### 环境变量覆盖配置
+
+也可以通过环境变量覆盖配置（优先级：环境变量 > 配置文件）：
+
+```bash
+docker run -d \
+  -e NANOBOT_PROVIDERS_OPENAI_API_KEY=sk-xxx \
+  -e NANOBOT_AGENTS_DEFAULTS_MODEL=gpt-4o-mini \
+  kobex95/nanobot-now:latest
+```
+
+环境变量格式：`NANOBOT_<配置路径>`，用下划线代替点号（例如 `NANOBOT_PROVIDERS_OPENAI_API_KEY` 对应 `providers.openai.apiKey`）。
 
 ## ⚡ 快速开始
 

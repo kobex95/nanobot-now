@@ -1,0 +1,108 @@
+{
+  "providers": {
+    "openai": {
+      "apiKey": "YOUR_OPENAI_API_KEY"
+    },
+    "openrouter": {
+      "apiKey": "YOUR_OPENROUTER_API_KEY",
+      "extraHeaders": {
+        "HTTP-Referer": "https://github.com/kobex95/nanobot-now",
+        "X-Title": "nanobot-rs"
+      }
+    },
+    "siliconflow": {
+      "apiKey": "YOUR_SILICONFLOW_API_KEY"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "gpt-4o-mini",
+      "maxTokens": 4096
+    }
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "provider": "brave",
+        "maxResults": 5
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": false,
+      "botToken": "YOUR_TELEGRAM_BOT_TOKEN",
+      "allowFrom": []
+    },
+    "discord": {
+      "enabled": false,
+      "botToken": "YOUR_DISCORD_BOT_TOKEN",
+      "applicationId": "YOUR_DISCORD_APP_ID",
+      "allowFrom": []
+    },
+    "feishu": {
+      "enabled": false,
+      "appId": "YOUR_FEISHU_APP_ID",
+      "appSecret": "YOUR_FEISHU_APP_SECRET",
+      "encryptKey": "YOUR_FEISHU_ENCRYPT_KEY"
+    },
+    "dingtalk": {
+      "enabled": false,
+      "clientId": "YOUR_DINGTALK_CLIENT_ID",
+      "clientSecret": "YOUR_DINGTALK_CLIENT_SECRET",
+      "allowFrom": []
+    },
+    "slack": {
+      "enabled": false,
+      "mode": "socket",
+      "botToken": "xoxb-YOUR_SLACK_BOT_TOKEN",
+      "appToken": "xapp-YOUR_SLACK_APP_TOKEN",
+      "groupPolicy": "mention",
+      "groupAllowFrom": [],
+      "dm": {
+        "enabled": true,
+        "policy": "open",
+        "allowFrom": []
+      }
+    },
+    "email": {
+      "enabled": false,
+      "consentGranted": false,
+      "imapHost": "imap.gmail.com",
+      "imapPort": 993,
+      "imapUsername": "you@gmail.com",
+      "imapPassword": "YOUR_IMAP_PASSWORD",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpUsername": "you@gmail.com",
+      "smtpPassword": "YOUR_SMTP_PASSWORD",
+      "smtpUseTls": true,
+      "fromAddress": "you@gmail.com",
+      "allowFrom": ["trusted@example.com"]
+    },
+    "mochat": {
+      "enabled": false,
+      "baseUrl": "https://mochat.io",
+      "clawToken": "YOUR_CLAW_TOKEN",
+      "agentUserId": "6982abcdef",
+      "sessions": ["*"],
+      "panels": ["*"],
+      "allowFrom": [],
+      "replyDelayMode": "non-mention",
+      "replyDelayMs": 120000
+    },
+    "qq": {
+      "enabled": false,
+      "appId": "YOUR_QQ_APP_ID",
+      "secret": "YOUR_QQ_SECRET",
+      "allowFrom": []
+    }
+  },
+  "cron": {
+    "enabled": true
+  },
+  "webui": {
+    "host": "0.0.0.0",
+    "port": 18890
+  }
+}
