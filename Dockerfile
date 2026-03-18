@@ -1,11 +1,12 @@
 # 第一阶段：构建
-FROM rust:1.85-slim AS builder
+FROM rust:1.85-alpine AS builder
 
 # 安装构建依赖
-RUN apt-get update && apt-get install -y \
-    pkg-config \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    musl-dev \
+    openssl-dev \
+    pkgconfig \
+    && rm -rf /var/cache/apk/*
 
 WORKDIR /build
 
@@ -25,16 +26,17 @@ COPY skills ./skills
 RUN cargo build --release --all-features --locked
 
 # 第二阶段：运行环境
-FROM debian:bookworm-slim
+FROM alpine:latest
 
 # 安装运行时依赖
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     ca-certificates \
     libssl3 \
-    && rm -rf /var/lib/apt/lists/*
+    && update-ca-certificates \
+    && rm -rf /var/cache/apk/*
 
 # 创建非 root 用户
-RUN useradd -m -u 1000 -s /bin/bash nanobot
+RUN adduser -D -u 1000 -s /bin/sh nanobot
 
 WORKDIR /app
 
