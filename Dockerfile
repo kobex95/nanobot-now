@@ -1,15 +1,14 @@
 # 第一阶段：构建
-FROM rust:1.89-alpine AS builder
+FROM rust:1.89-slim AS builder
 
 # 安装构建依赖
-RUN apk add --no-cache \
-    musl-dev \
-    openssl-dev \
-    pkgconfig \
-    zlib-dev \
-    sqlite-dev \
-    curl-dev \
-    && rm -rf /var/cache/apk/*
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    libssl-dev \
+    zlib1g-dev \
+    libsqlite3-dev \
+    libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
@@ -22,24 +21,23 @@ COPY vendor ./vendor
 COPY src ./src
 COPY skills ./skills
 
-# 构建 release 版本（设置调试环境变量）
-ENV RUST_BACKTRACE=1
-RUN cargo build --release -v 2>&1 | tee /tmp/build.log; exit ${PIPESTATUS[0]}
+# 构建 release 版本
+RUN cargo build --release
 
 # 第二阶段：运行环境
-FROM alpine:latest
+FROM debian:bookworm-slim
 
 # 安装运行时依赖
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     ca-certificates \
     libssl3 \
-    sqlite-libs \
-    zlib \
-    && update-ca-certificates \
-    && rm -rf /var/cache/apk/*
+    zlib1g \
+    libsqlite3-0 \
+    libcurl4 \
+    && rm -rf /var/lib/apt/lists/*
 
 # 创建非 root 用户
-RUN adduser -D -u 1000 -s /bin/sh nanobot
+RUN useradd -m -u 1000 -s /bin/bash nanobot
 
 WORKDIR /app
 
