@@ -6,6 +6,9 @@ RUN apk add --no-cache \
     musl-dev \
     openssl-dev \
     pkgconfig \
+    zlib-dev \
+    sqlite-dev \
+    curl-dev \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /build
@@ -29,6 +32,8 @@ FROM alpine:latest
 RUN apk add --no-cache \
     ca-certificates \
     libssl3 \
+    sqlite-libs \
+    zlib \
     && update-ca-certificates \
     && rm -rf /var/cache/apk/*
 
