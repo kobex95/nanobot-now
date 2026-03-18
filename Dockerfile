@@ -15,9 +15,6 @@ COPY Cargo.toml ./
 COPY Cargo.lock ./
 COPY vendor ./vendor
 
-# 预获取依赖（不编译）
-RUN cargo fetch
-
 # 复制源代码
 COPY src ./src
 COPY skills ./skills
