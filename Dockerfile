@@ -13,10 +13,15 @@ WORKDIR /build
 COPY Cargo.toml ./
 COPY Cargo.lock ./
 COPY vendor ./vendor
+
+# 预获取依赖（不编译）
+RUN cargo fetch --locked
+
+# 复制源代码
 COPY src ./src
 COPY skills ./skills
 
-# 构建 release 版本（包含常用功能特性）
+# 构建 release 版本
 RUN cargo build --release --all-features --locked
 
 # 第二阶段：运行环境
