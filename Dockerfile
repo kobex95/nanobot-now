@@ -16,14 +16,14 @@ COPY Cargo.lock ./
 COPY vendor ./vendor
 
 # 预获取依赖（不编译）
-RUN cargo fetch --locked
+RUN cargo fetch
 
 # 复制源代码
 COPY src ./src
 COPY skills ./skills
 
 # 构建 release 版本
-RUN cargo build --release --all-features --locked
+RUN cargo build --release --all-features
 
 # 第二阶段：运行环境
 FROM alpine:latest
