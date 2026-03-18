@@ -22,8 +22,9 @@ COPY vendor ./vendor
 COPY src ./src
 COPY skills ./skills
 
-# 构建 release 版本（不包含所有特性，先验证基础功能）
-RUN cargo build --release -v
+# 构建 release 版本（设置调试环境变量）
+ENV RUST_BACKTRACE=1
+RUN cargo build --release -v 2>&1 | tee /tmp/build.log; exit ${PIPESTATUS[0]}
 
 # 第二阶段：运行环境
 FROM alpine:latest
