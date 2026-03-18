@@ -1,5 +1,5 @@
 # 第一阶段：构建
-FROM rust:1.85-alpine AS builder
+FROM rust:1.89-alpine AS builder
 
 # 安装构建依赖
 RUN apk add --no-cache \
